@@ -78,7 +78,11 @@ def save_excel():
     global image_paths,data
     image_relative_paths=[x.split('/')[-1].split('\\')[-1] for x in image_paths]
     histogram_title=",".join(image_relative_paths)
-    save_to_excel(data,image_relative_paths,"excel/"+histogram_title[:249]+".xlsx")
+    current_working_directory = os.getcwd()
+    while len(histogram_title)+len(current_working_directory)+len("excel/.xlsx")>207:
+        histogram_title=histogram_title[:-1]
+
+    save_to_excel(data,image_relative_paths,"excel/"+histogram_title+".xlsx")
 
 # source: https://stackoverflow.com/a/39459376
 class CustomNotebook(ttk.Notebook):
@@ -201,7 +205,10 @@ if __name__ == "__main__":
             image_paths.append(image_path.split('/')[-1].split('\\')[-1])
             data.append(droplet_diameters)
         histogram_title=",".join(image_paths)
-        save_to_excel(data,image_paths,"excel/"+histogram_title[:249]+".xlsx")
+        current_working_directory = os.getcwd()
+        while len(histogram_title)+len(current_working_directory)+len("excel/.xlsx")>207:
+            histogram_title=histogram_title[:-1]
+        save_to_excel(data,image_paths,"excel/"+histogram_title+".xlsx")
         plot_bins(data,histogram_title,image_paths)
     else:
 
