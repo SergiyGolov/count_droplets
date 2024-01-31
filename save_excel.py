@@ -21,7 +21,7 @@ def save_to_excel(data,image_paths,filename):
 
     rightmost_column_i=0
     worksheet_plot.write(0,0,'Histogram bin limits')
-    # bins=[round(3.5/10*(x+1),2) for x in range(10)]
+
     bins=[0.15,0.6,2]
     for i,b in enumerate(bins):
         worksheet_plot.write(i+1,0,b)
@@ -75,13 +75,13 @@ def save_to_excel(data,image_paths,filename):
             chart.set_y_axis({"name": "Number of droplets"})
             chart.set_x_axis({"name": "Configuration"})
             if i==0:
-                default_value=f"Comparing configurations for droplets of size 0 - {bins[0]} µm"
+                chart_title=f"Comparing configurations for droplets of size 0 - {bins[0]} µm"
             elif i==len(bins):
-                default_value=f"Comparing configurations for droplets of size >{max(bins)} µm"
+                chart_title=f"Comparing configurations for droplets of size >{max(bins)} µm"
             else:
-                default_value=f"Comparing configurations for droplets of size {bins[i-1]} - {bins[i]} µm"
-            worksheet_plot.write_formula(f"{plot_column}{plot_row}",f'="Comparing configurations for droplets of size "&{chart_categories_column}{i+2}&""',value=default_value)
-            chart.set_title({"name": f'=\'{worksheet_plot_name}\'!{plot_column}{plot_row}'})
+                chart_title=f"Comparing configurations for droplets of size {bins[i-1]} - {bins[i]} µm"
+
+            chart.set_title({"name": chart_title})
 
             
             chart.add_series(
