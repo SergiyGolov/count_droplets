@@ -10,7 +10,7 @@ scale = 20  # in um
 nb_pixels_scale = 428  # in px, 428 px = 20 um
 
 
-def count_droplets(image_path, debug=False):
+def count_droplets(image_path, debug=False, blur=True):
 
     image_extension = image_path.split(".")[-1]
     if image_extension == "tif":
@@ -29,6 +29,10 @@ def count_droplets(image_path, debug=False):
         img_gray = cv2.cvtColor(cropped_img, cv2.COLOR_BGR2GRAY)
     else:
         img_gray = cropped_img
+
+    if blur:
+        kernel = np.ones((3, 3), np.float32) / 9
+        img_gray = cv2.filter2D(img_gray, -1, kernel)
 
     ret, thresh = cv2.threshold(img_gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 

@@ -267,7 +267,7 @@ if __name__ == "__main__":
         os.makedirs("excel")
 
     if len(sys.argv) > 1:
-        debug = False
+        debug = True
         for image_path in sys.argv[1:]:
             droplet_diameters, img, img_contours = count_droplets(image_path, debug)
             image_paths.append(image_path.split("/")[-1].split("\\")[-1])
